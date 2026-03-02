@@ -1,0 +1,45 @@
+name: pytest
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  tests:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Create a .env for CI (your repo ignores local .env)
+      - name: Create .env for CI
+        run: |
+          echo BASE_URL=https://httpbin.org > .env
+          echo TIMEOUT=10 >> .env
+
+      - name: Run pytest (API)
+        run: |
+          pytest -m api -v
+
+      # Optional: upload HTML report (only if it exists)
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-html-report
+          path: reports/report.html
+
+          
