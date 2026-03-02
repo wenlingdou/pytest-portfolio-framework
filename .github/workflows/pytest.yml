@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
 jobs:
   tests:
     runs-on: windows-latest
@@ -24,25 +29,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Create a .env for CI (your repo ignores local .env)
       - name: Create .env for CI
         run: |
           echo BASE_URL=https://httpbin.org > .env
           echo TIMEOUT=10 >> .env
 
-      - name: Run pytest (API)
+      - name: Run pytest (API) with JUnit output
         run: |
           pytest -m api -v --junitxml=reports/junit.xml
 
-      - name: Publish test results (summary)
+      - name: Publish test results summary
         if: always()
         uses: dorny/test-reporter@v1
         with:
           name: PyTest Results
           path: reports/junit.xml
-          reporter: java-junit 
+          reporter: java-junit
 
-      # Optional: upload HTML report as an artifact (only if it exists)
       - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
@@ -50,3 +53,4 @@ jobs:
           name: pytest-html-report
           path: reports/report.html
 
+          
