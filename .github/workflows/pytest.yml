@@ -32,9 +32,17 @@ jobs:
 
       - name: Run pytest (API)
         run: |
-          pytest -m api -v
+          pytest -m api -v --junitxml=reports/junit.xml
 
-      # Optional: upload HTML report (only if it exists)
+      - name: Publish test results (summary)
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: PyTest Results
+          path: reports/junit.xml
+          reporter: java-junit 
+
+      # Optional: upload HTML report as an artifact (only if it exists)
       - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
@@ -42,4 +50,3 @@ jobs:
           name: pytest-html-report
           path: reports/report.html
 
-          
