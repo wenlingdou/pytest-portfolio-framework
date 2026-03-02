@@ -1,0 +1,16 @@
+# venv
+.venv/
+
+# python cache
+__pycache__/
+*.pyc
+
+# env secrets
+.env
+
+# reports (optional)
+reports/
+
+# vscode
+.vscode/
+
