@@ -30,6 +30,7 @@ jobs:
 
       - name: Run pytest
         run: |
+          mkdir -p reports
           pytest -m api -v
 
       - name: Copy report to docs
