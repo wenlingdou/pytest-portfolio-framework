@@ -2,11 +2,10 @@ import random
 import pytest
 
 # if we have 1000 packets and success rate is > 90%
-@pytest.mark.api
 def simulate_packet_send():
     return random.random() < 0.9
 
-
+@pytest.mark.api
 def test_packet_loss_rate():
     random.seed(123)   # make test reproducible
 
