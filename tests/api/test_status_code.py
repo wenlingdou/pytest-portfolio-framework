@@ -6,3 +6,5 @@ def test_status_codes(api, code):
 
     resp = api.get(f"/status/{code}")
     assert resp.status_code == code
+
+    
