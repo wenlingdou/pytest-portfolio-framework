@@ -34,10 +34,11 @@ jobs:
           mkdir -p reports
           pytest -m api -v
 
-      - name: Copy report to docs
-        run: |
-          mkdir -p docs
-          cp reports/report.html docs/report.html
+      - name: Create docs folder
+        run: mkdir -p docs
+
+      - name: Copy report
+        run: cp reports/report.html docs/report.html
 
       - name: Commit report to GitHub Pages
         run: |
