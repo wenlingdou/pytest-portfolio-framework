@@ -30,6 +30,7 @@ jobs:
 
       - name: Run pytest
         run: |
+          rm -rf reports
           mkdir -p reports
           pytest -m api -v
 
