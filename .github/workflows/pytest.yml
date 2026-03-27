@@ -38,13 +38,13 @@ jobs:
         run: mkdir -p docs
 
       - name: Copy report
-        run: cp reports/report.html docs/report.html
+        run: cp reports/report.html docs/index.html
 
       - name: Commit report to GitHub Pages
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add docs/report.html
+          git add docs/index.html
           git commit -m "Update test report [skip ci]" || echo "No changes"
           git pull --rebase origin main
           git push origin HEAD:main
