@@ -21,3 +21,6 @@ def test_packet_loss_rate():
     print(f"Packet Loss Rate: {loss_rate:.2%}")
 
     assert loss_rate <= 0.1
+
+# demo test
+
